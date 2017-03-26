@@ -1,7 +1,10 @@
 #include <string>
 #include <iostream>
 #include <crtdbg.h>
+#include <stdlib.h>
 #include "HousingRegister.h"
+
+void ReadFromStringArray(const std::string theArray[], HousingRegister* Register);
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -9,15 +12,21 @@ int main() {
 	std::cout << "Press any key to start test" << std::endl;
 	getchar();
 
-	//HousingRegister Register(2);
+	HousingRegister Register(2);
 
-	//Register.AddHousing(1, "Gata 1", 2, "Villa", 3, 4);
-	//Register.AddHousing(2, "Gata 2", 3, "Villa", 4, 5);
+	Register.AddHousing(1, "Gata 1", 2, "Villa", 3, 4);
+	Register.AddHousing(2, "Gata 2", 3, "Villa", 4, 5);
 
-	//std::string A[2];
-	//Register.PresentAllHousing(A);
-	//std::cout << A << std::endl;
+	std::string A[2];
+	Register.PresentAllHousing(A);
+	ReadFromStringArray(A, &Register);
 
 	getchar();
 	return 0;
+}
+
+void ReadFromStringArray(const std::string theArray[], HousingRegister* Register) {
+	for (int i = 0; i < Register->GetSize(); i++) {
+		std::cout << theArray[i] << std::endl;
+	}
 }

@@ -13,7 +13,7 @@ Housing* HousingRegister::GetHousingItem(const int itemPosition) const {
 void HousingRegister::AddHousing(const int id, const std::string adress, const int rent, const std::string propertyType,
 	const int area, const int rooms) {
 	if (freeSpace > 0) {
-		HousingList[size + 1] = new Housing(id, adress, rent, propertyType, area, rooms);
+		HousingList[size] = new Housing(id, adress, rent, propertyType, area, rooms);
 		this->size++;
 		this->freeSpace--;
 	}
@@ -22,7 +22,7 @@ void HousingRegister::AddHousing(const int id, const std::string adress, const i
 		for (int i = 0; i < size; i++) {
 			temp[i] = HousingList[i];
 		}
-		temp[size + 1] = new Housing(id, adress, rent, propertyType, area, rooms);
+		temp[size] = new Housing(id, adress, rent, propertyType, area, rooms);
 
 		delete[] this->HousingList;
 		this->HousingList = temp;
@@ -38,9 +38,11 @@ void HousingRegister::PresentAllHousing(std::string stringList[]) const {
 }
 
 void HousingRegister::PresentHousingUnderValue(std::string stringList[], const int valueParam) const {
+	int listSpaceUsed = 0;
 	for (int i = 0; i < size; i++) {
 		if (HousingList[i]->GetRent() < valueParam) {
-			stringList[i] = HousingList[i]->toString();
+			stringList[listSpaceUsed] = HousingList[i]->toString();
+			listSpaceUsed++;
 		}
 		
 	}
@@ -48,9 +50,11 @@ void HousingRegister::PresentHousingUnderValue(std::string stringList[], const i
 
 void HousingRegister::PresentHousingWithCriteria(std::string stringList[], const std::string propertyTypeParam,
 	const int roomsParam) const {
+	int listSpaceUsed = 0;
 	for (int i = 0; i < size; i++) {
 		if ((HousingList[i]->GetRooms() == roomsParam) && (HousingList[i]->GetPropertyType() == propertyTypeParam)) {
-			stringList[i] = HousingList[i]->toString();
+			stringList[listSpaceUsed] = HousingList[i]->toString();
+			listSpaceUsed++;
 		}
 		
 	}

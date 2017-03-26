@@ -19,36 +19,36 @@ int Housing::GetRooms() const {
 	return this->rooms;
 }
 
-void Housing::SetID(int newID) {
+void Housing::SetID(const int newID) {
 	this->id = newID;
 }
-void Housing::SetAddress(std::string newAddress) {
+void Housing::SetAddress(const std::string newAddress) {
 	this->address = newAddress;
 }
-void Housing::SetRent(int newRent) {
+void Housing::SetRent(const int newRent) {
 	this->rent = newRent;
 }
-void Housing::SetPropertyType(std::string newPropertyType) {
+void Housing::SetPropertyType(const std::string newPropertyType) {
 	this->propertyType = newPropertyType;
 }
-void Housing::SetArea(int newArea) {
+void Housing::SetArea(const int newArea) {
 	this->area = newArea;
 }
-void Housing::SetRooms(int newRooms) {
+void Housing::SetRooms(const int newRooms) {
 	this->rooms = newRooms;
 }
 
 std::string Housing::toString() const {
-	std::string idString	=	std::to_string(id);
-	std::string rentString	=	std::to_string(rent);
-	std::string areaString	=	std::to_string(area);
-	std::string roomsString =	std::to_string(rooms);
+	std::string idString = std::to_string(GetID());
+	std::string rentString = std::to_string(rent);
+	std::string areaString = std::to_string(area);
+	std::string roomsString = std::to_string(rooms);
 
 	return("ID: " + idString + " | Address: " + address + " | Rent: " + rentString +
 		" | Type: " + propertyType + " | Area: " + areaString + " | Rooms: " + roomsString);
 }
 
-Housing::Housing(int startID, std::string startAddress, int startRent, std::string startPropertyType, int startArea, int startRooms) {
+Housing::Housing(const int startID, const std::string startAddress, const int startRent, const std::string startPropertyType, const int startArea, const int startRooms){
 	this->id = startID;
 	this->address = startAddress;
 	this->rent = startRent;
@@ -56,6 +56,7 @@ Housing::Housing(int startID, std::string startAddress, int startRent, std::stri
 	this->area = startArea;
 	this->rooms = startRooms;
 }
+
 Housing::~Housing() {
 	//empty
 }
