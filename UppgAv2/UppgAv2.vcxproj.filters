@@ -15,25 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HousingRegister.cpp">
+    <ClInclude Include="Housing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HousingRegister.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Housing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Housing.cpp">
+    <ClCompile Include="HousingRegister.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="HousingRegister.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Housing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
