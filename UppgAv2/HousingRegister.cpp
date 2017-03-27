@@ -10,25 +10,36 @@ Housing* HousingRegister::GetHousingItem(const int itemPosition) const {
 	return this->HousingList[itemPosition];
 }
 
-void HousingRegister::AddHousing(const int id, const std::string adress, const int rent, const std::string propertyType,
+bool HousingRegister::AddHousing(const int id, const std::string address, const int rent, const std::string propertyType,
 	const int area, const int rooms) {
-	if (freeSpace > 0) {
-		HousingList[size] = new Housing(id, adress, rent, propertyType, area, rooms);
-		this->size++;
-		this->freeSpace--;
-	}
-	else {
-		Housing** temp = new Housing*[size + 1];
-		for (int i = 0; i < size; i++) {
-			temp[i] = HousingList[i];
+	bool endValue = true;
+
+	for (int i = 0; i < size; i++) {
+		if (HousingList[i]->GetID() == id) {
+			endValue = false;
 		}
-		temp[size] = new Housing(id, adress, rent, propertyType, area, rooms);
-
-		delete[] this->HousingList;
-		this->HousingList = temp;
-
-		this->size++;
 	}
+
+	if (endValue == true) {
+		if (freeSpace > 0) {
+			HousingList[size] = new Housing(id, address, rent, propertyType, area, rooms);
+			this->size++;
+			this->freeSpace--;
+		}
+		else {
+			Housing** temp = new Housing*[size + 1];
+			for (int i = 0; i < size; i++) {
+				temp[i] = HousingList[i];
+			}
+			temp[size] = new Housing(id, address, rent, propertyType, area, rooms);
+
+			delete[] this->HousingList;
+			this->HousingList = temp;
+
+			this->size++;
+		}
+	}	
+	return endValue;
 }
 
 void HousingRegister::PresentAllHousing(std::string stringList[]) const {
@@ -37,41 +48,49 @@ void HousingRegister::PresentAllHousing(std::string stringList[]) const {
 	}
 }
 
-void HousingRegister::PresentHousingUnderValue(std::string stringList[], const int valueParam) const {
+int HousingRegister::PresentHousingUnderValue(std::string stringList[], const int valueParam) const {
 	int listSpaceUsed = 0;
+	int unusedAmount = 0;
 	for (int i = 0; i < size; i++) {
 		if (HousingList[i]->GetRent() < valueParam) {
 			stringList[listSpaceUsed] = HousingList[i]->toString();
 			listSpaceUsed++;
 		}
-		
+		else {
+			unusedAmount++;
+		}
 	}
+	return unusedAmount;
 }
 
-void HousingRegister::PresentHousingWithCriteria(std::string stringList[], const std::string propertyTypeParam,
+int HousingRegister::PresentHousingWithCriteria(std::string stringList[], const std::string propertyTypeParam,
 	const int roomsParam) const {
 	int listSpaceUsed = 0;
+	int unusedAmount = 0;
 	for (int i = 0; i < size; i++) {
 		if ((HousingList[i]->GetRooms() == roomsParam) && (HousingList[i]->GetPropertyType() == propertyTypeParam)) {
 			stringList[listSpaceUsed] = HousingList[i]->toString();
 			listSpaceUsed++;
 		}
-		
+		else {
+			unusedAmount++;
+		}
 	}
+	return unusedAmount;
 }
 
 void HousingRegister::RemoveHousing(const int idParam) {
 	for (int i = 0; i < size; i++) {
 		if (HousingList[i]->GetID() == idParam) {
-			delete[] this->HousingList[i];
+			delete this->HousingList[i];
 
-			for (int j = i + 1; j < size - 1; j++) {
-				HousingList[j - 1] = HousingList[j];
+			for (int j = i; j < size - 1; j++) {
+				HousingList[j] = HousingList[j + 1];
 			}
-			HousingList[size] = nullptr;
+			HousingList[size - 1] = nullptr;
 			this->size--;
 			this->freeSpace++;
-			i--;
+			//i--;
 		}
 	}	//da "early returns ar inte tillatna, break endast i samband med ev switch/case" maste for-satsen fortsatta
 }		//trotts att vi vet att ID:t ar unikt. (Man skulle kunna satta i = size, men det blir ju inte alls snyggt...)
@@ -99,7 +118,7 @@ HousingRegister::HousingRegister(const HousingRegister &other) {
 
 	this->HousingList = new Housing*[size + freeSpace];
 
-	for (int i = 0; i < size; ) {
+	for (int i = 0; i < size; i++) {
 		this->HousingList[i] = new Housing(
 			other.GetHousingItem(i)->GetID(), other.GetHousingItem(i)->GetAddress(),
 			other.GetHousingItem(i)->GetRent(), other.GetHousingItem(i)->GetPropertyType(),
@@ -116,7 +135,7 @@ HousingRegister& HousingRegister::operator=(const HousingRegister &other) {
 
 		this->HousingList = new Housing*[size + freeSpace];
 
-		for (int i = 0; i < size; ) {
+		for (int i = 0; i < size; i++) {
 			this->HousingList[i] = new Housing(
 				other.GetHousingItem(i)->GetID(), other.GetHousingItem(i)->GetAddress(),
 				other.GetHousingItem(i)->GetRent(), other.GetHousingItem(i)->GetPropertyType(),
@@ -127,7 +146,11 @@ HousingRegister& HousingRegister::operator=(const HousingRegister &other) {
 	return *this;
 }
 
-HousingRegister::HousingRegister(const int startValue) {
+HousingRegister::HousingRegister(int startValue) {
+	if (startValue < 1) {
+		startValue = 1;
+	}
+
 	this->HousingList = new Housing*[startValue];
 	this->size = 0;
 	this->freeSpace = startValue;

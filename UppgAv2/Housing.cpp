@@ -44,8 +44,8 @@ std::string Housing::toString() const {
 	std::string areaString = std::to_string(area);
 	std::string roomsString = std::to_string(rooms);
 
-	return("ID: " + idString + " | Address: " + address + " | Rent: " + rentString +
-		" | Type: " + propertyType + " | Area: " + areaString + " | Rooms: " + roomsString);
+	return("ID: " + idString + " | Address: " + address + " | Rent: " + rentString + " sek/month" +
+		" | Type: " + propertyType + " | Area: " + areaString + " m^2" + " | Rooms: " + roomsString);
 }
 
 Housing::Housing(const int startID, const std::string startAddress, const int startRent, const std::string startPropertyType, const int startArea, const int startRooms){
