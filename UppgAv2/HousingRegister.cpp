@@ -108,9 +108,80 @@ void HousingRegister::ChangeHousingProperties(const int idParam, const std::stri
 	}
 }
 
-void HousingRegister::SaveAllHousing() const {}
+void HousingRegister::SaveAllHousing(const std::string fileName) const {
+	std::ofstream SaveStream;
+	SaveStream.open(fileName);
 
-void HousingRegister::ReadAllHousing() {}
+	SaveStream << std::to_string(this->size) << "\n"
+		<< std::to_string(this->freeSpace) << "\n";
+
+	for (int i = 0; i < size; i++) {
+		SaveStream << std::to_string(HousingList[i]->GetID()) << "%";
+		SaveStream << HousingList[i]->GetAddress() << "%";
+		SaveStream << std::to_string(HousingList[i]->GetRent()) << "%";
+		SaveStream << HousingList[i]->GetPropertyType() << "%";
+		SaveStream << std::to_string(HousingList[i]->GetArea()) << "%";
+		SaveStream << std::to_string(HousingList[i]->GetRooms()) << "\n";
+	}
+	SaveStream.close();
+}
+
+bool HousingRegister::ReadAllHousing(const std::string fileName) {
+	bool goodCall = true;
+	std::ifstream LoadStream;
+	LoadStream.open(fileName);
+
+	if (LoadStream.is_open()) {
+		for (int i = 0; i < size; i++) {
+			delete HousingList[i];
+		}
+		delete[] this->HousingList;
+
+		std::string sizeNew, freeSpaceNew, id, address, rent, propertyType, area, rooms, row;
+		size_t divider;
+
+		std::getline(LoadStream, sizeNew);
+		std::getline(LoadStream, freeSpaceNew);
+		int totalSize = std::stoi(sizeNew) + std::stoi(freeSpaceNew);
+
+		this->HousingList = new Housing*[totalSize];
+		this->size = 0;
+		this->freeSpace = totalSize;
+
+		for (int i = 0; i < std::stoi(sizeNew); i++) {
+			std::getline(LoadStream, row);
+
+			divider = row.find("%");
+			id = row.substr(0, divider);
+			row = row.substr(divider + 1);
+
+			divider = row.find("%");
+			address = row.substr(0, divider);
+			row = row.substr(divider + 1);
+
+			divider = row.find("%");
+			rent = row.substr(0, divider);
+			row = row.substr(divider + 1);
+
+			divider = row.find("%");
+			propertyType = row.substr(0, divider);
+			row = row.substr(divider + 1);
+
+			divider = row.find("%");
+			area = row.substr(0, divider);
+			row = row.substr(divider + 1);
+
+			divider = row.find("%");
+			rooms = row.substr(0, divider);
+
+			AddHousing(stoi(id), address, stoi(rent), propertyType, stoi(area), stoi(rooms));
+		}
+	}
+	else {
+		goodCall = false;
+	}
+	return goodCall;
+}
 
 HousingRegister::HousingRegister(const HousingRegister &other) {
 	this->size = other.GetSize();
@@ -156,7 +227,7 @@ HousingRegister::HousingRegister(int startValue) {
 	this->freeSpace = startValue;
 }
 HousingRegister::~HousingRegister() {
-	for (int i = 0; i < size; i++) {	//for kanske inte behovs...
+	for (int i = 0; i < size; i++) {
 		delete HousingList[i];
 	}
 	delete[] this->HousingList;

@@ -1,8 +1,12 @@
 #ifndef HOUSING_H
 #define HOUSING_H
 
-#include <iostream>
 #include <string>
+#include <iostream>
+#include <crtdbg.h>
+#include <stdlib.h>
+#include <sstream>
+#include <fstream>
 
 class Housing {
 private:

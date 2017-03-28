@@ -1,3 +1,6 @@
-﻿  HousingRegister.cpp
+﻿  HousingRegisterMenu.cpp
+d:\git repos\cplusplusass1v2\uppgav2\housingregistermenu.cpp(108): warning C4018: '<': signed/unsigned mismatch
+d:\git repos\cplusplusass1v2\uppgav2\housingregistermenu.cpp(127): warning C4018: '<': signed/unsigned mismatch
+d:\git repos\cplusplusass1v2\uppgav2\housingregistermenu.cpp(154): warning C4018: '<': signed/unsigned mismatch
   UppgAv2.vcxproj -> D:\Git Repos\CPlusPlusAss1v2\Debug\UppgAv2.exe
   UppgAv2.vcxproj -> D:\Git Repos\CPlusPlusAss1v2\Debug\UppgAv2.pdb (Full PDB)

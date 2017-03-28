@@ -1,7 +1,4 @@
-#include <string>
-#include <iostream>
-#include <crtdbg.h>
-#include <stdlib.h>
+
 #include "HousingRegister.h"
 
 void AddHouse(HousingRegister* Register);
@@ -11,7 +8,7 @@ void PrintHousesWithCriteria(const HousingRegister* Register);
 void RemoveHouse(HousingRegister* Register);
 void ChangeHouse(HousingRegister* Register);
 void SaveHouses(const HousingRegister* Register);
-void ReadHouses(const HousingRegister* Register);
+void ReadHouses(HousingRegister* Register);
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -200,9 +197,24 @@ void ChangeHouse(HousingRegister* Register) {
 }
 
 void SaveHouses(const HousingRegister* Register) {
-	
+	std::string fileName;
+	std::cout << "Name of save file: ";
+	std::cin >> fileName;
+
+	Register->SaveAllHousing(fileName);
 }
 
-void ReadHouses(const HousingRegister* Register) {
-	
+void ReadHouses(HousingRegister* Register){
+	std::string fileName;
+	std::cout << "Name of file to load housing data from: ";
+	std::cin >> fileName;
+
+	bool result = Register->ReadAllHousing(fileName);
+
+	if (result == true) {
+		std::cout << "file loaded successfully" << std::endl;
+	}
+	else {
+		std::cout << "load operation failed" << std::endl;
+	}
 }

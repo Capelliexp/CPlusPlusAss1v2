@@ -1,7 +1,3 @@
-#include <string>
-#include <iostream>
-#include <crtdbg.h>
-#include <stdlib.h>
 #include "HousingRegister.h"
 
 void ReadFromStringArray(const HousingRegister* Register);

@@ -2,7 +2,6 @@
 #define HOUSINGREGISTER_H
 
 #include "Housing.h"
-#include <string>
 
 class HousingRegister {
 private:
@@ -20,8 +19,8 @@ public:
 	int PresentHousingWithCriteria(std::string stringList[], const std::string propertyTypeParam, const int roomsParam) const;
 	void RemoveHousing(const int idParam);
 	void ChangeHousingProperties(const int idParam, const std::string newAddress, const int newRent, const std::string newPropertyType, const int newArea, const int newRooms);
-	void SaveAllHousing() const;
-	void ReadAllHousing();
+	void SaveAllHousing(const std::string fileName) const;
+	bool ReadAllHousing(const std::string fileName);
 
 	HousingRegister(const HousingRegister &other);	//copy construct
 	HousingRegister& operator=(const HousingRegister &other);	//assignment operator
